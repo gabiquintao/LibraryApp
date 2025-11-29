@@ -104,5 +104,21 @@ namespace LibraryApp.Entities
 		{
 			return $"{Id}: \"{Title}\" by {Author} ({Year})";
 		}
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Book)
+            {
+                return false;
+            }
+
+            Book other = (Book)obj;
+            return Title == other.Title && Author == other.Author && Year == other.Year;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Title, Author, Year);
+        }
 	}
 }
