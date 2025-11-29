@@ -4,7 +4,10 @@ using System.Text;
 
 namespace LibraryApp.Entities
 {
-    public class Book
+	/// <summary>
+	/// Represents a book in the library.
+	/// </summary>
+	public class Book
     {
         private readonly int _id;
         private string _title = "";
@@ -17,8 +20,9 @@ namespace LibraryApp.Entities
         }
 
 		/// <summary>
-		/// Title of the book. Cannot be empty.
+		/// Title of the book.
 		/// </summary>
+		/// <exception cref="ArgumentException">Thrown when title is empty or whitespace.</exception>
 		public string Title
         {
             get { return _title; }
@@ -32,8 +36,9 @@ namespace LibraryApp.Entities
         }
 
 		/// <summary>
-		/// Author of the book. Cannot be empty.
+		/// Author of the book.
 		/// </summary>
+		/// <exception cref="ArgumentException">Thrown when author name is empty or whitespace.</exception>
 		public string Author
         {
             get { return _author; }
@@ -47,28 +52,43 @@ namespace LibraryApp.Entities
         }
 
 		/// <summary>
-		/// Book publication year. Must be between 0 and 2025.
+		/// Minimum allowed publication year.
 		/// </summary>
+		private const int minYear = 0;
+
+		/// <summary>
+		/// Maximum allowed publication year.
+		/// </summary>
+		private const int maxYear = 2025;
+
+		/// <summary>
+		/// Book publication year.
+		/// </summary>
+		/// <exception cref="ArgumentException">Thrown if year is outside valid range.</exception>
 		public int Year
         {
             get { return _year; }
             set { 
-                if (value < 0 || value > 2025)
+                if (value < minYear || value > maxYear)
                 {
-                    throw new ArgumentException("Book publication year must be between 0 and 2025");
+                    throw new ArgumentException($"Book publication year must be between {minYear} and {maxYear}");
                 }
                 _year = value; 
             }
         }
 
-        private static int _nextId = 0;
+		/// <summary>
+		/// Static counter to generate unique IDs for each book.
+		/// </summary>
+		private static int _nextId = 0;
 
 		/// <summary>
-		/// Represents a book in the library.
+		/// Initializes a new instance of the Book class with title, author, and publication year.
 		/// </summary>
 		/// <param name="title">The title of the book.</param>
 		/// <param name="author">The author of the book.</param>
-        /// <param name="year">Publication year.</param>
+		/// <param name="year">The publication year.</param>
+		/// <exception cref="ArgumentException">Thrown when any parameter is invalid.</exception>
 		public Book(string title, string author, int year)
         {
             _id = _nextId++;
@@ -76,5 +96,13 @@ namespace LibraryApp.Entities
             Author = author;
             Year = year;
         }
-    }
+
+		/// <summary>
+		/// Returns a string representation of the book.
+		/// </summary>
+		public override string ToString()
+		{
+			return $"{Id}: \"{Title}\" by {Author} ({Year})";
+		}
+	}
 }
