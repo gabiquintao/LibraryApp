@@ -122,6 +122,10 @@ namespace LibraryApp.Entities
             return Title == other.Title && Author == other.Author && Year == other.Year;
         }
 
+		/// <summary>
+		/// Returns a hash code for the current book, based on Title, Author, and Year.
+		/// </summary>
+		/// <returns>An integer hash code.</returns>
 		public override int GetHashCode()
         {
             return HashCode.Combine(Title, Author, Year);
