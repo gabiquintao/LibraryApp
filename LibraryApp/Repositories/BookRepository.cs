@@ -10,7 +10,7 @@ namespace LibraryApp.Repositories
 	/// Represents the data layer of the application for managing books.
 	/// </summary>
 	public class BookRepository : IBookRepository
-    {
+	{
 		/// <summary>
 		/// In-memory list as the data source.
 		/// </summary>
@@ -32,14 +32,14 @@ namespace LibraryApp.Repositories
 		/// The book with the specified ID if found; otherwise, null.
 		/// </returns>
 		public Result<Book> FindById(int id)
-        {
+		{
 			if (_books.TryGetValue(id, out Book? book))
 			{
 				return Result<Book>.Ok(book);
 			}
 
 			return Result<Book>.Fail($"Book with ID {id} not found.");
-        }
+		}
 
 		/// <summary>
 		/// Adds a book to the data source.
@@ -114,6 +114,25 @@ namespace LibraryApp.Repositories
 			}
 
 			current.Update(title, author, year);
+			return Result.Ok();
+		}
+
+
+		/// <summary>
+		/// Removes an existing book from the repository, identified by its ID.
+		/// </summary>
+		/// <param name="id">The unique identifier of the book to remove.</param>
+		/// <returns>
+		/// A <see cref="Result"/> indicating success or failure.
+		/// Fails if the book does not exist.
+		/// </returns>
+		public Result Remove(int id)
+		{
+			if (!_books.Remove(id))
+			{
+				return Result.Fail($"Book with ID {id} not found.");
+			}
+				
 			return Result.Ok();
 		}
 	}
