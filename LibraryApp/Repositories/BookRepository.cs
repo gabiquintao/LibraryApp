@@ -54,5 +54,28 @@ namespace LibraryApp.Repositories
 
 			return Result.Fail($"Book with ID {book.Id} already exists.");
 		}
+
+		/// <summary>
+		/// Determines whether a book with already with the same properties exists in the repository, excluding the book itself.
+		/// </summary>
+		/// <param name="book">The book to check for duplication.</param>
+		/// <returns>True if a duplicate exists; otherwise, false.</returns>
+		public bool ExistsDuplicate(Book book)
+		{
+			foreach (Book b in _books.Values)
+			{
+				if (b.Id == book.Id)
+				{
+					continue;
+				}
+
+				if (book.Equals(b))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
 	}
 }
