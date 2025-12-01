@@ -12,5 +12,6 @@ namespace LibraryApp.Repositories
 		public Result<IReadOnlyCollection<Book>> GetAll();
 		public Result<Book> FindById(int id);
 		public Result Add(Book book);
+		public bool ExistsDuplicate(Book book);
 	}
 }
