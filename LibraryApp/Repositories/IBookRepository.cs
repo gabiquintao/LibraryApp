@@ -13,5 +13,6 @@ namespace LibraryApp.Repositories
 		public Result<Book> FindById(int id);
 		public Result Add(Book book);
 		public bool ExistsDuplicate(Book book);
+		public Result Update(int id, string? title, string? author, int? year);
 	}
 }

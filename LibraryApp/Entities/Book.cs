@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryApp.Shared;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -130,5 +131,19 @@ namespace LibraryApp.Entities
         {
             return HashCode.Combine(Title, Author, Year);
         }
+
+		/// <summary>
+		/// Updates the properties of this book instance.
+		/// Only non-null parameters will overwrite the current values.
+		/// </summary>
+		/// <param name="title">The new title of the book, or null to leave unchanged.</param>
+		/// <param name="author">The new author of the book, or null to leave unchanged.</param>
+		/// <param name="year">The new publication year of the book, or null to leave unchanged.</param>
+		public void Update(string? title, string? author, int? year)
+		{
+			Title = title ?? Title;
+			Author = author ?? Author;
+			Year = year ?? Year;
+		}
 	}
 }

@@ -77,5 +77,44 @@ namespace LibraryApp.Repositories
 
 			return false;
 		}
+
+		/// <summary>
+		/// Updates the properties of an existing book in the repository, identified by its ID.
+		/// Performs validation and fails if another book with the same properties already exists.
+		/// </summary>
+		/// <param name="id">The unique identifier of the book to update.</param>
+		/// <param name="title">The new title of the book, or null to leave unchanged.</param>
+		/// <param name="author">The new author of the book, or null to leave unchanged.</param>
+		/// <param name="year">The new publication year of the book, or null to leave unchanged.</param>
+		/// <returns>
+		/// A <see cref="Result"/> indicating success or failure.
+		/// Fails if the book does not exist or if a duplicate exists with the same properties.
+		/// </returns>
+		public Result Update(int id, string? title, string? author, int? year)
+		{
+			Result<Book> findResult = FindById(id);
+
+			if (!findResult.Success || findResult.Value == null)
+			{
+				return Result.Fail(findResult.ErrorMessage ?? $"Book with ID {id} not found.");
+			}
+
+			Book current = findResult.Value;
+
+			Book temp = new Book(
+				title ?? current.Title,
+				author ?? current.Author,
+				year ?? current.Year
+			);
+
+
+			if (ExistsDuplicate(temp))
+			{
+				return Result.Fail("Book already exists.");
+			}
+
+			current.Update(title, author, year);
+			return Result.Ok();
+		}
 	}
 }
