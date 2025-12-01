@@ -105,7 +105,13 @@ namespace LibraryApp.Entities
 			return $"{Id}: \"{Title}\" by {Author} ({Year})";
 		}
 
-        public override bool Equals(object? obj)
+		/// <summary>
+		/// Determines whether the specified object is equal to the current book.
+		/// Two books are considered equal if they have the same Title, Author, and Year.
+		/// </summary>
+		/// <param name="obj">The object to compare with the current book.</param>
+		/// <returns>True if the objects are equal; otherwise, false.</returns>
+		public override bool Equals(object? obj)
         {
             if (obj is not Book)
             {
@@ -116,7 +122,7 @@ namespace LibraryApp.Entities
             return Title == other.Title && Author == other.Author && Year == other.Year;
         }
 
-        public override int GetHashCode()
+		public override int GetHashCode()
         {
             return HashCode.Combine(Title, Author, Year);
         }
