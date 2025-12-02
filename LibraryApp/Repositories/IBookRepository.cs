@@ -14,7 +14,6 @@ namespace LibraryApp.Repositories
 		public Result Add(Book book);
 		public bool ExistsDuplicate(Book book);
 		public Result Update(int id, string? title, string? author, int? year);
-
-		public Result Delete(int id);
+		public Result Remove(int id);
 	}
 }
